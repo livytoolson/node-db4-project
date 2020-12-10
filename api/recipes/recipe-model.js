@@ -45,8 +45,8 @@ function getInstructions(id) {
 //     on si.step_id = s.step_id
 // where r.recipe_id = 1;
     return db('recipes')
-    .select('recipes.name', 'steps.instruction')
+    .select('recipes.name', 'steps.instruction', 'steps.step_number')
     .join('steps', 'steps.recipe_id', 'recipes.recipe_id')
-    .join('step_ingredients', 'step_ingredients_id' , 'steps.step_id')
-    .where({recipe_id: id})
+    .join('step_ingredients', 'step_ingredients.step_id' , 'steps.step_id')
+    .where('recipes.recipe_id', id)
 }

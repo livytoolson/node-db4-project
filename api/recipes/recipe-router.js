@@ -26,8 +26,15 @@ router.get('/:id/shoppingList', (req, res) => {
 });
 
 router.get('/:id/instructions', (req, res) => {
-
-})
+    const { id } = req.params
+    Recipes.getInstructions(id)
+    .then(instructions => {
+        res.json(instructions);
+    })
+    .catch(error => {
+        res.status(500).json({ message: error.message })
+    });
+});
 
 router.get('/:id/recipes', (req, res) => {
 
