@@ -37,16 +37,14 @@ function getShoppingList(id) {
 function getInstructions(id) {
 // select 
 //     r.name,
-//     s.instruction
+//     s.instruction,
+//     s.step_number
 // from recipes r
-// join steps s 
+// join steps s
 //     on s.recipe_id = r.recipe_id
-// join step_ingredients si 
-//     on si.step_id = s.step_id
 // where r.recipe_id = 1;
     return db('recipes')
     .select('recipes.name', 'steps.instruction', 'steps.step_number')
     .join('steps', 'steps.recipe_id', 'recipes.recipe_id')
-    .join('step_ingredients', 'step_ingredients.step_id' , 'steps.step_id')
     .where('recipes.recipe_id', id)
 }
