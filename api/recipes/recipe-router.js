@@ -1,19 +1,29 @@
-const db = require('../../data/dbConfig');
+const express = require('express');
 
-module.exports = {
-    getRecipes,
-    getShoppingList,
-    getInstructions
-}
+const Recipes = require('./recipe-model');
 
-function getRecipes() {
-    return db('recipes')
-}
+const router = express.Router();
 
-function getShoppingList(recipe_id) {
+router.get('/', (req, res) => {
+    Recipes.getRecipes()
+    .then(recipes => {
+        res.json(recipes);
+    })
+    .catch(error => {
+        res.status(500).json({ message: error.message })
+    });
+});
 
-}
+router.get('/:id/shoppingList', (req, res) => {
 
-function getInstructions(recipe_id) {
+})
 
-}
+router.get('/:id/instructions', (req, res) => {
+
+})
+
+router.get('/:id/recipes', (req, res) => {
+
+})
+
+module.exports = router;
