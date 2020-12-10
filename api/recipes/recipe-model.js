@@ -12,29 +12,29 @@ function getRecipes() {
 
 function getShoppingList(id) {
 // select 
-//     i.ingredients,
-//     si.quantity,
-//     u.unit_type 
-// from recipes r
-// join steps s 
-//     on s.recipe_id = r.recipe_id
-// join step_ingredients si 
-//     on si.step_id = s.step_id
-// join ingredients i 
-//     on si.ingredient_id = i.ingredient_id
-// join units u
-//     on u.unit_id = si.unit_id
-// where r.recipe_id = 1;
+//     ingredients.ingredients,
+//     step_ingredients.quantity,
+//     units.unit_type 
+// from recipes 
+// join steps 
+//    on steps.recipe_id = recipes.recipe_id
+// join step_ingredients 
+//    on step_ingredients.step_id = steps.step_id
+// join ingredients 
+//    on step_ingredients.ingredient_id = ingredients.ingredient_id
+// join units
+//    on units.unit_id = step_ingredients.unit_id
+// where recipes.recipe_id = 1;
     return db('recipes')
     .select('ingredients.ingredients', 'step_ingredients.quantity', 'units.unit_type')
-    .join('steps', 'steps.recipe_id', 'recipes.recipe.id')
+    .join('steps', 'steps.recipe_id', 'recipes.recipe_id')
     .join('step_ingredients', 'step_ingredients.step_id', 'steps.step_id')
-    .join('ingredients', 'step_ingredients', 'ingredients.ingredient_id')
+    .join('ingredients', 'step_ingredients.ingredient_id', 'ingredients.ingredient_id')
     .join('units', 'units.unit_id', 'step_ingredients.unit_id')
-    .where({recipe_id: id})
+    .where('recipes.recipe_id', id)
 }
 
-function getInstructions(recipe_id) {
+function getInstructions(id) {
 // select 
 //     r.name,
 //     s.instruction
@@ -44,4 +44,9 @@ function getInstructions(recipe_id) {
 // join step_ingredients si 
 //     on si.step_id = s.step_id
 // where r.recipe_id = 1;
+    return db('recipes')
+    .select('recipes.name', 'steps.instruction')
+    .join('steps', 'steps.recipe_id', 'recipes.recipe_id')
+    .join('step_ingredients', 'step_ingredients_id' , 'steps.step_id')
+    .where({recipe_id: id})
 }

@@ -15,8 +15,15 @@ router.get('/', (req, res) => {
 });
 
 router.get('/:id/shoppingList', (req, res) => {
-
-})
+    const { id } = req.params
+    Recipes.getShoppingList(id)
+    .then(shoppingList => {
+        res.json(shoppingList);
+    })
+    .catch(error => {
+        res.status(500).json({ message: error.message })
+    });
+});
 
 router.get('/:id/instructions', (req, res) => {
 
